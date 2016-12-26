@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NewsHunt</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="news_item_title">News Title</string>
+    <string name="news_item_source">News Source</string>
+
+</resources>
