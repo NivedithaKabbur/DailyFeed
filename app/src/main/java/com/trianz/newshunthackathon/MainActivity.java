@@ -1,10 +1,13 @@
 package com.trianz.newshunthackathon;
 
+import android.animation.LayoutTransition;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,11 +16,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,9 +35,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.trianz.newshunthackathon.Utils.JSONParser;
 import com.trianz.newshunthackathon.Utils.MySingleton;
+import com.trianz.newshunthackathon.Utils.RecyclerItemClickListener;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     private Spinner categorySpinner = null;
     ArrayList<String> category_list = new ArrayList<>();
     Set<String> category_list_set = new HashSet<>();
+    ProgressBar progressBar;
+    ImageView errorImage;
+ //   SwipeRefreshLayout swipeToRefresh;
 
 
     @Override
@@ -56,18 +69,22 @@ public class MainActivity extends AppCompatActivity {
         newsDetailsSearchResult = new ArrayList<>();
 
         categorySpinner = (Spinner) findViewById(R.id.category_spinner);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        errorImage = (ImageView) findViewById(R.id.error_image);
+      //  swipeToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
 
         // Fetch the latest news from the server
         fetchLatestNews();
+
+     /*   swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh() {
+
+                // Fetch the latest news from the server
+                fetchLatestNews();
+
+            }
+        });  */
 
     }
 
@@ -80,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
+    //    searchView.setIconifiedByDefault(false);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -91,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
 
                 newsDetailsSearchResult.clear();
+                categorySpinner.setSelection(0);
 
                 for(int i = 0; i< newsDetailsArray.size(); i++)
                 {
@@ -129,11 +148,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void fetchLatestNews()
     {
+
+        progressBar.setVisibility(View.VISIBLE);
+        errorImage.setVisibility(View.INVISIBLE);
+
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, /*"https://dailyfeedapi.herokuapp.com/dailyfeed.json"*/"https://api.myjson.com/bins/15vpv3", null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET,/*"https://dailyfeedapi.herokuapp.com/dailyfeed.json"*/"https://api.myjson.com/bins/15vpv3", null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        progressBar.setVisibility(View.INVISIBLE);
 
                         JSONParser jsonParser = new JSONParser();
                         newsDetailsArray =  jsonParser.newsDataParser(response.toString());
@@ -157,6 +182,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
 
+                        error.printStackTrace();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        errorImage.setVisibility(View.VISIBLE);
+
                     }
                 });
 
@@ -174,11 +203,29 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(newsListAdapter);
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+
+                        Intent newsContent = new Intent(MainActivity.this, NewsContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        newsContent.putExtra("newsItemImage", newsDetailsSearchResult.get(position).getImage());
+                        newsContent.putExtra("newsItemTitle", newsDetailsSearchResult.get(position).getTitle());
+                        newsContent.putExtra("newsItemContent", newsDetailsSearchResult.get(position).getContent());
+                        newsContent.putExtra("newsItemUrl", newsDetailsSearchResult.get(position).getUrl());
+
+                        startActivity(newsContent);
+                    }
+                })
+        );
+
     }
 
     public void categorySpinnerDataSetter()
     {
 
+        categorySpinner.setVisibility(View.VISIBLE);
         category_list.add("All");
         category_list.addAll(category_list_set);
 
@@ -207,15 +254,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    // set news details to the adapter.
-                    recyclerViewSetter(newsDetailsSearchResult);
                 }
 
                 else
                 {
-                    // set news details to the adapter.
-                    recyclerViewSetter(newsDetailsArray);
+                    newsDetailsSearchResult = new ArrayList<NewsDetails>(newsDetailsArray);
                 }
+
+                // set news details to the adapter.
+                recyclerViewSetter(newsDetailsSearchResult);
 
             }
 

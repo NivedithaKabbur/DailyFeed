@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="com.trianz.newshunthackathon.NewsContentActivity">
+
+    <ImageView
+        android:id="@+id/news_description_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+      />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/news_description_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/news_description_content"
+            android:textSize="15sp"
+            android:paddingTop="5dp"
+            android:lineSpacingExtra="2.5dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/news_description_link_button"
+        android:background="@color/colorAccent"
+        android:text="Read More..."
+        android:textColor="@android:color/white"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+</LinearLayout>

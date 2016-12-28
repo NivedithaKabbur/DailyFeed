@@ -3,10 +3,12 @@ package com.trianz.newshunthackathon;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -38,17 +40,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.bindContent(newsDetailsList.get(position));
-
-      /*  NewsDetails newsDetails = newsDetailsList.get(position);
-        holder.title.setText(newsDetails.getTitle());
-        holder.source.setText(newsDetails.getSource());
-
-        Picasso
-                .with(context)
-              //  .load(newsDetails.getImage())
-                .load("http://www.trianz.com/images/home-logo.png")
-                .fit() // will explain later
-                .into(holder.image);   */
 
     }
 
