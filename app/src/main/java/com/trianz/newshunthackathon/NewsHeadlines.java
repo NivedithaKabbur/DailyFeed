@@ -1,33 +1,31 @@
 package com.trianz.newshunthackathon;
 
-import android.animation.LayoutTransition;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.LayoutAnimationController;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,13 +37,12 @@ import com.trianz.newshunthackathon.Utils.RecyclerItemClickListener;
 
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity {
+public class NewsHeadlines extends AppCompatActivity {
+
 
     ArrayList<NewsDetails> newsDetailsArray, newsDetailsSearchResult;
     private RecyclerView recyclerView = null;
@@ -55,15 +52,16 @@ public class MainActivity extends AppCompatActivity {
     Set<String> category_list_set = new HashSet<>();
     ProgressBar progressBar;
     ImageView errorImage;
- //   SwipeRefreshLayout swipeToRefresh;
-
+    String news_source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_news_headlines);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+       news_source = getIntent().getStringExtra("newsSourceId");
 
         newsDetailsArray = new ArrayList<>();
         newsDetailsSearchResult = new ArrayList<>();
@@ -71,20 +69,10 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner = (Spinner) findViewById(R.id.category_spinner);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         errorImage = (ImageView) findViewById(R.id.error_image);
-      //  swipeToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
 
         // Fetch the latest news from the server
-        fetchLatestNews();
-
-     /*   swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-            @Override
-            public void onRefresh() {
-
-                // Fetch the latest news from the server
-                fetchLatestNews();
-
-            }
-        });  */
+        fetchLatestNews(news_source);
 
     }
 
@@ -97,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-    //    searchView.setIconifiedByDefault(false);
+        //    searchView.setIconifiedByDefault(false);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -113,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
 
                 for(int i = 0; i< newsDetailsArray.size(); i++)
                 {
-                    if(newsDetailsArray.get(i).getTitle().toLowerCase().contains(newText.toLowerCase()) || newsDetailsArray.get(i).getSource().toLowerCase().contains(newText.toLowerCase()))
+                    if(newsDetailsArray.get(i).getTitle().toLowerCase().contains(newText.toLowerCase()) || newsDetailsArray.get(i).getAuthor().toLowerCase().contains(newText.toLowerCase()))
                     {
 
-                      newsDetailsSearchResult.add(newsDetailsArray.get(i));
+                        newsDetailsSearchResult.add(newsDetailsArray.get(i));
 
                     }
                 }
@@ -146,17 +134,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void fetchLatestNews()
+    public void fetchLatestNews(String newsSource)
     {
 
         progressBar.setVisibility(View.VISIBLE);
         errorImage.setVisibility(View.INVISIBLE);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET,/*"https://dailyfeedapi.herokuapp.com/dailyfeed.json"*/"https://api.myjson.com/bins/15vpv3", null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET,"https://newsapi.org/v1/articles?source="+newsSource+"&apiKey=00d0a25c744241ef9d90e4a0572b84aa", null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        Log.v("Data", response.toString());
 
                         progressBar.setVisibility(View.INVISIBLE);
 
@@ -166,10 +156,10 @@ public class MainActivity extends AppCompatActivity {
                         category_list.clear();
                         category_list_set.clear();
 
-                      for (int i= 0 ; i< newsDetailsArray.size(); i++)
-                      {
-                          category_list_set.add(newsDetailsArray.get(i).getCategory());
-                      }
+                        for (int i= 0 ; i< newsDetailsArray.size(); i++)
+                        {
+                            category_list_set.add(newsDetailsArray.get(i).getPublishedAt());
+                        }
 
                         // set news details to the adapter.
                         recyclerViewSetter(newsDetailsArray);
@@ -198,8 +188,8 @@ public class MainActivity extends AppCompatActivity {
     public void recyclerViewSetter(ArrayList<NewsDetails> newsDetailsList)
     {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        newsListAdapter = new NewsListAdapter(MainActivity.this, newsDetailsList);
-        GridLayoutManager gm = new GridLayoutManager(MainActivity.this, 2);
+        newsListAdapter = new NewsListAdapter(NewsHeadlines.this, newsDetailsList);
+        GridLayoutManager gm = new GridLayoutManager(NewsHeadlines.this, 2);
         recyclerView.setLayoutManager(gm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(newsListAdapter);
@@ -209,10 +199,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override public void onItemClick(View view, int position) {
                         // TODO Handle item click
 
-                        Intent newsContent = new Intent(MainActivity.this, NewsContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        newsContent.putExtra("newsItemImage", newsDetailsSearchResult.get(position).getImage());
+                        Intent newsContent = new Intent(NewsHeadlines.this, NewsContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        newsContent.putExtra("newsItemImage", newsDetailsSearchResult.get(position).getUrlToImage());
                         newsContent.putExtra("newsItemTitle", newsDetailsSearchResult.get(position).getTitle());
-                        newsContent.putExtra("newsItemContent", newsDetailsSearchResult.get(position).getContent());
+                        newsContent.putExtra("newsItemContent", newsDetailsSearchResult.get(position).getDescription());
                         newsContent.putExtra("newsItemUrl", newsDetailsSearchResult.get(position).getUrl());
 
                         startActivity(newsContent);
@@ -247,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 if( !categorySpinner.getSelectedItem().toString().equals("All")) {
 
                     for (int i = 0; i < newsDetailsArray.size(); i++) {
-                        if (newsDetailsArray.get(i).getCategory().equals(categorySpinner.getSelectedItem().toString())) {
+                        if (newsDetailsArray.get(i).getPublishedAt().equals(categorySpinner.getSelectedItem().toString())) {
 
                             newsDetailsSearchResult.add(newsDetailsArray.get(i));
 
@@ -272,4 +262,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

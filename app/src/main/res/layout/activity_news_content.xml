@@ -35,6 +35,8 @@
             android:id="@+id/news_description_content"
             android:textSize="15sp"
             android:paddingTop="5dp"
+            android:maxLines="8"
+            android:scrollbars="vertical"
             android:lineSpacingExtra="2.5dp"
             android:textColor="@color/colorPrimary"
             android:layout_width="match_parent"

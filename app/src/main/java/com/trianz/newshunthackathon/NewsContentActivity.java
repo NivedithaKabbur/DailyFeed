@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.text.method.ScrollingMovementMethod;
+import android.transition.Transition;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +46,7 @@ public class NewsContentActivity extends AppCompatActivity {
 
         news_title.setText(newsTitle);
         news_content.setText(newsContent);
+        news_content.setMovementMethod(new ScrollingMovementMethod());
 
         news_url_button.setOnClickListener(new View.OnClickListener() {
             @Override

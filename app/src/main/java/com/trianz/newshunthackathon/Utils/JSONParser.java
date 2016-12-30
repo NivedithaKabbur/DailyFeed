@@ -1,8 +1,7 @@
 package com.trianz.newshunthackathon.Utils;
 
-import android.util.Log;
-
 import com.trianz.newshunthackathon.NewsDetails;
+import com.trianz.newshunthackathon.NewsSourceItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,17 +34,17 @@ public class JSONParser {
                 JSONObject itemArrayObj = articlesList.getJSONObject(i);
 
                 String news_title = itemArrayObj.get("title").toString();
-                String news_source = itemArrayObj.get("source").toString();
-                String news_category = itemArrayObj.get("category").toString();
-                String news_image = itemArrayObj.get("image").toString();
-                String news_content = itemArrayObj.get("content").toString();
+                String news_author = itemArrayObj.get("author").toString();
+                String news_published_at = itemArrayObj.get("publishedAt").toString();
+                String news_url_to_image = itemArrayObj.get("urlToImage").toString();
+                String news_description = itemArrayObj.get("description").toString();
                 String news_url = itemArrayObj.get("url").toString();
 
                 newsDetails.setTitle(news_title);
-                newsDetails.setSource(news_source);
-                newsDetails.setCategory(news_category);
-                newsDetails.setImage(news_image);
-                newsDetails.setContent(news_content);
+                newsDetails.setAuthor(news_author);
+                newsDetails.setPublishedAt(news_published_at);
+                newsDetails.setUrlToImage(news_url_to_image);
+                newsDetails.setDescription(news_description);
                 newsDetails.setUrl(news_url);
 
                 newsDetailsItemArrayList.add(newsDetails);
@@ -58,6 +57,45 @@ public class JSONParser {
         }
 
         return newsDetailsItemArrayList;
+    }
+
+    public ArrayList<NewsSourceItem> newsSourceParser(String jsonData)
+    {
+        ArrayList<NewsSourceItem> newsSourceItemArrayList = new ArrayList<>();
+
+        try {
+
+            JSONObject jsonObject = new JSONObject(jsonData.toString());
+
+            JSONArray sourcesList = (JSONArray) jsonObject.get("sources");
+
+
+            for (int i=0; i<sourcesList.length(); i++)
+            {
+                NewsSourceItem newsSourceItem = new NewsSourceItem();
+
+                JSONObject itemArrayObj = sourcesList.getJSONObject(i);
+
+                String news_source_id = itemArrayObj.get("id").toString();
+                String news_source_name = itemArrayObj.get("name").toString();
+
+                JSONObject urlsToLogos = itemArrayObj.getJSONObject("urlsToLogos");
+                String news_source_logo = urlsToLogos.get("small").toString();
+
+                newsSourceItem.setSourceId(news_source_id);
+                newsSourceItem.setSourceName(news_source_name);
+                newsSourceItem.setSourceLogo(news_source_logo);
+
+                newsSourceItemArrayList.add(newsSourceItem);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
+
+        return newsSourceItemArrayList;
     }
 
 }

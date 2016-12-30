@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:paddingTop="40dp"
+        android:paddingRight="20dp"
+        android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
+        android:tint="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:id="@+id/news_buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+
+
+      <Button
+            android:id="@+id/news_option_business"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_margin="5dp"
+            android:text="Business"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/news_selection_button"
+            />
+
+        <Button
+            android:id="@+id/news_option_entertainment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Entertainment"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/news_selection_button"
+            />
+
+        <Button
+            android:id="@+id/news_option_general"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="General"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/news_selection_button"
+            />
+
+        <Button
+            android:id="@+id/news_option_sport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Sport"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/news_selection_button"
+            />
+
+        <Button
+            android:id="@+id/news_option_technology"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Technology"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/news_selection_button"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

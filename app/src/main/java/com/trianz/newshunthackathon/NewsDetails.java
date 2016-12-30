@@ -6,10 +6,10 @@ package com.trianz.newshunthackathon;
 public class NewsDetails {
 
     private String title;
-    private String source;
-    private String category;
-    private String image;
-    private String content;
+    private String author;  // author
+    private String publishedAt; // publishedAt
+    private String urlToImage;  // urlToImage
+    private String description;  // description
     private String url;
 
     public void setTitle(String title)
@@ -22,44 +22,44 @@ public class NewsDetails {
         return title;
     }
 
-    public void setSource(String source)
+    public void setAuthor(String author)
     {
-        this.source = source;
+        this.author = author;
     }
 
-    public String getSource()
+    public String getAuthor()
     {
-        return source;
+        return author;
     }
 
-    public void setCategory(String category)
+    public void setPublishedAt(String publishedAt)
     {
-        this.category = category;
+        this.publishedAt = publishedAt;
     }
 
-    public String getCategory()
+    public String getPublishedAt()
     {
-        return category;
+        return publishedAt;
     }
 
-    public void setImage(String image)
+    public void setUrlToImage(String urlToImage)
     {
-        this.image = image;
+        this.urlToImage = urlToImage;
     }
 
-    public String getImage()
+    public String getUrlToImage()
     {
-        return image;
+        return urlToImage;
     }
 
-    public void setContent(String content)
+    public void setDescription(String description)
     {
-        this.content = content;
+        this.description = description;
     }
 
-    public String getContent()
+    public String getDescription()
     {
-        return content;
+        return description;
     }
 
     public void setUrl(String url)

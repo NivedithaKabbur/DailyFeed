@@ -63,6 +63,7 @@
     <CheckBox
         android:id="@+id/news_bookmark"
         android:layout_margin="5dp"
+        android:visibility="invisible"
         android:layout_gravity="end|bottom"
         android:button="@drawable/news_bookmark_checkbox"
         android:buttonTint="@android:color/white"
