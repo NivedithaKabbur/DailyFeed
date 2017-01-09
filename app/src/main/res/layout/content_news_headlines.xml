@@ -5,21 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.trianz.newshunthackathon.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="com.trianz.newshunthackathon.NewsHeadlines"
+    tools:showIn="@layout/activity_news_headlines">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/category_spinner"
-            android:visibility="invisible"
-            style="@android:style/Widget.Holo.Light.Spinner"
-            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

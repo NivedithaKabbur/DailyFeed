@@ -80,7 +80,7 @@ public class JSONParser {
                 String news_source_name = itemArrayObj.get("name").toString();
 
                 JSONObject urlsToLogos = itemArrayObj.getJSONObject("urlsToLogos");
-                String news_source_logo = urlsToLogos.get("small").toString();
+                String news_source_logo = urlsToLogos.get("medium").toString();
 
                 newsSourceItem.setSourceId(news_source_id);
                 newsSourceItem.setSourceName(news_source_name);

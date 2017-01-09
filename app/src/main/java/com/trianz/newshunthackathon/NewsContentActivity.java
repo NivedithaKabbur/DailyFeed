@@ -42,7 +42,7 @@ public class NewsContentActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        Picasso.with(this).load(newsImage).placeholder(R.drawable.placeholder).fit().into(news_image);
+        Picasso.with(this).load(newsImage).fit().placeholder(R.drawable.collapsable_layout_image_cover).into(news_image);
 
         news_title.setText(newsTitle);
         news_content.setText(newsContent);

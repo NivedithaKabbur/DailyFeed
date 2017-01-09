@@ -19,7 +19,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:layout_marginLeft="0dp"
+        android:layout_marginLeft="-64dp"
+        android:background="@android:color/white"
         app:headerLayout="@layout/nav_header_news_feed_source"
         />
 

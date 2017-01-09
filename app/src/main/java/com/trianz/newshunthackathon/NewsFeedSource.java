@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,9 +50,10 @@ public class NewsFeedSource extends AppCompatActivity
     private RecyclerView recyclerView = null;
     private NewsSourceAdapter newsSourceAdapter= null;
     ProgressBar progressBar;
-    ImageView errorImage;
-    Button business, entertainment,general, sports, technology;
-    String NEWS_CATEGORY = "general";
+    ImageView errorImage, collapseImage;
+    Button business, entertainment,general, sports, technology, science_and_nature, music, gaming;
+    String NEWS_CATEGORY = "general", NEWS_CATEGORY_NAME = "General";
+    CollapsingToolbarLayout collapsingToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,10 @@ public class NewsFeedSource extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setSubtitle("Powered by newsAPI.org");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapseImage = (ImageView) collapsingToolbar.findViewById(R.id.header);
 
         newsSourceItemArray = new ArrayList<>();
 
@@ -85,13 +90,20 @@ public class NewsFeedSource extends AppCompatActivity
         general = (Button) header.findViewById(R.id.news_option_general);
         sports = (Button) header.findViewById(R.id.news_option_sport);
         technology = (Button) header.findViewById(R.id.news_option_technology);
+        science_and_nature = (Button) header.findViewById(R.id.news_option_science_nature);
+        music = (Button) header.findViewById(R.id.news_option_music);
+        gaming = (Button) header.findViewById(R.id.news_option_gaming);
 
         business.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 drawer.closeDrawers();
-                fetchLatestNews("business");
+                NEWS_CATEGORY = "business";
+                NEWS_CATEGORY_NAME = "Business";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackground(getResources().getDrawable(R.drawable.business));
+                fetchLatestNews(NEWS_CATEGORY);
             }
         });
 
@@ -100,7 +112,11 @@ public class NewsFeedSource extends AppCompatActivity
             public void onClick(View v) {
 
                 drawer.closeDrawers();
-                fetchLatestNews("entertainment");
+                NEWS_CATEGORY = "entertainment";
+                NEWS_CATEGORY_NAME = "Entertainment";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackground(getResources().getDrawable(R.drawable.entertainment));
+                fetchLatestNews(NEWS_CATEGORY);
             }
         });
 
@@ -110,7 +126,11 @@ public class NewsFeedSource extends AppCompatActivity
             public void onClick(View v) {
 
                 drawer.closeDrawers();
-                fetchLatestNews("general");
+                NEWS_CATEGORY = "general";
+                NEWS_CATEGORY_NAME = "General";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackground(getResources().getDrawable(R.drawable.general));
+                fetchLatestNews(NEWS_CATEGORY);
             }
         });
 
@@ -120,7 +140,11 @@ public class NewsFeedSource extends AppCompatActivity
             public void onClick(View v) {
 
                 drawer.closeDrawers();
-                fetchLatestNews("sport");
+                NEWS_CATEGORY = "sport";
+                NEWS_CATEGORY_NAME = "Sports";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackground(getResources().getDrawable(R.drawable.sports));
+                fetchLatestNews(NEWS_CATEGORY);
             }
         });
 
@@ -129,12 +153,57 @@ public class NewsFeedSource extends AppCompatActivity
             public void onClick(View v) {
 
                 drawer.closeDrawers();
-                fetchLatestNews("technology");
+                NEWS_CATEGORY = "technology";
+                NEWS_CATEGORY_NAME = "Technology";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackground(getResources().getDrawable(R.drawable.technology));
+                fetchLatestNews(NEWS_CATEGORY);
+            }
+        });
+
+        science_and_nature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawers();
+                NEWS_CATEGORY = "science-and-nature";
+                NEWS_CATEGORY_NAME = "Science and Nature";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackground(getResources().getDrawable(R.drawable.science_and_nature));
+                fetchLatestNews(NEWS_CATEGORY);
+            }
+        });
+
+        gaming.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawers();
+                NEWS_CATEGORY = "gaming";
+                NEWS_CATEGORY_NAME = "Gaming";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackground(getResources().getDrawable(R.drawable.gaming));
+                fetchLatestNews(NEWS_CATEGORY);
+            }
+        });
+
+        music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawers();
+                NEWS_CATEGORY = "music";
+                NEWS_CATEGORY_NAME = "Music";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackground(getResources().getDrawable(R.drawable.music));
+                fetchLatestNews(NEWS_CATEGORY);
             }
         });
 
 
-        // Fetch the latest news from the server
+        // Fetch the latest general news from the server
+        collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+        collapseImage.setBackground(getResources().getDrawable(R.drawable.general));
         fetchLatestNews(NEWS_CATEGORY);
 
     }
@@ -199,6 +268,9 @@ public class NewsFeedSource extends AppCompatActivity
         progressBar.setVisibility(View.VISIBLE);
         errorImage.setVisibility(View.INVISIBLE);
 
+        newsSourceItemArray.clear();
+        recyclerViewSetter();
+
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET,"https://newsapi.org/v1/sources?language=en&category="+category, null, new Response.Listener<JSONObject>() {
 
@@ -210,10 +282,8 @@ public class NewsFeedSource extends AppCompatActivity
                         JSONParser jsonParser = new JSONParser();
                         newsSourceItemArray =  jsonParser.newsSourceParser(response.toString());
 
-                        Log.v("data",newsSourceItemArray.get(2).getSourceLogo().toString());
-
                         // set news details to the adapter.
-                        recyclerViewSetter(newsSourceItemArray);
+                        recyclerViewSetter();
 
                     }
                 }, new Response.ErrorListener() {
@@ -235,10 +305,10 @@ public class NewsFeedSource extends AppCompatActivity
 
     }
 
-    public void recyclerViewSetter(final ArrayList<NewsSourceItem> newsSourceItemList)
+    public void recyclerViewSetter()
     {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        newsSourceAdapter = new NewsSourceAdapter(NewsFeedSource.this, newsSourceItemList);
+        newsSourceAdapter = new NewsSourceAdapter(NewsFeedSource.this, newsSourceItemArray);
         GridLayoutManager gm = new GridLayoutManager(NewsFeedSource.this, 1);
         recyclerView.setLayoutManager(gm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -250,7 +320,8 @@ public class NewsFeedSource extends AppCompatActivity
                         // TODO Handle item click
 
                         Intent newsContent = new Intent(NewsFeedSource.this, NewsHeadlines.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        newsContent.putExtra("newsSourceId", newsSourceItemList.get(position).getSourceId());
+                        newsContent.putExtra("newsSourceId", newsSourceItemArray.get(position).getSourceId());
+                        newsContent.putExtra("newsSourceName",  newsSourceItemArray.get(position).getSourceName());
 
                         startActivity(newsContent);
                     }

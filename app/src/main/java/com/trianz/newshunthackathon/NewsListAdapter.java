@@ -61,9 +61,15 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         }
 
         public void bindContent(NewsDetails newsDetails) {
-            title.setText(newsDetails.getTitle());
-            source.setText(newsDetails.getAuthor());
-            Picasso.with(context).load(newsDetails.getUrlToImage()).fit().placeholder(R.drawable.placeholder).fit().into(image);
+
+            if(!newsDetails.getTitle().equals("null")) {
+                title.setText(newsDetails.getTitle());
+            }
+            if(!newsDetails.getAuthor().equals("null")) {
+                source.setText(newsDetails.getAuthor());
+            }
+
+            Picasso.with(context).load(newsDetails.getUrlToImage()).fit().into(image);
 
         }
     }

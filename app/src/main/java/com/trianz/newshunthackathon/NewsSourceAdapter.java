@@ -29,7 +29,7 @@ public class NewsSourceAdapter  extends RecyclerView.Adapter<NewsSourceAdapter.M
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.news_source_item, parent, false);
+                .inflate(R.layout.news_source_item_view, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -60,7 +60,7 @@ public class NewsSourceAdapter  extends RecyclerView.Adapter<NewsSourceAdapter.M
         public void bindContent(NewsSourceItem newsSourceItem) {
 
             name.setText(newsSourceItem.getSourceName());
-            Picasso.with(context).load(newsSourceItem.getSourceLogo()).fit().placeholder(R.drawable.placeholder).fit().into(image);
+            Picasso.with(context).load(newsSourceItem.getSourceLogo()).resize(300,300).centerInside().into(image);
 
         }
     }
