@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -60,7 +61,7 @@ public class NewsSourceAdapter  extends RecyclerView.Adapter<NewsSourceAdapter.M
         public void bindContent(NewsSourceItem newsSourceItem) {
 
             name.setText(newsSourceItem.getSourceName());
-            Picasso.with(context).load(newsSourceItem.getSourceLogo()).resize(300,300).centerInside().into(image);
+            Picasso.with(context).load(newsSourceItem.getSourceLogo()).resize(300,300).networkPolicy(NetworkPolicy.OFFLINE).centerInside().into(image);
 
         }
     }

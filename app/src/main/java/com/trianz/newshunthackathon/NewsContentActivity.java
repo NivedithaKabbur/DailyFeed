@@ -2,28 +2,30 @@ package com.trianz.newshunthackathon;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
+
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.text.method.ScrollingMovementMethod;
-import android.transition.Transition;
+
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
+
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 public class NewsContentActivity extends AppCompatActivity {
 
     ImageView news_image;
     TextView news_title, news_content;
     Button news_url_button;
+    ImageView share;
+    String share_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class NewsContentActivity extends AppCompatActivity {
         String newsTitle =  getIntent().getStringExtra("newsItemTitle");
         String newsContent =  getIntent().getStringExtra("newsItemContent");
         final String newsUrl = getIntent().getStringExtra("newsItemUrl");
+        share_data = newsUrl;
 
         news_image = (ImageView) findViewById(R.id.news_description_image);
         news_title = (TextView) findViewById(R.id.news_description_title);
@@ -41,6 +44,7 @@ public class NewsContentActivity extends AppCompatActivity {
         news_url_button = (Button) findViewById(R.id.news_description_link_button);
 
         getSupportActionBar().hide();
+
 
         Picasso.with(this).load(newsImage).fit().placeholder(R.drawable.collapsable_layout_image_cover).into(news_image);
 
@@ -58,5 +62,71 @@ public class NewsContentActivity extends AppCompatActivity {
             }
         });
 
+        share = (ImageView) findViewById(R.id.share_button);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, share_data); // Simple text and URL to share
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    Intent sendIntent = new Intent();
+//                    sendIntent.setAction(Intent.ACTION_SEND);
+//                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Content");
+//                    sendIntent.setType("text/plain");
+//                    startActivity(sendIntent);
+//                }else {
+//                    Intent intent = new Intent(Intent.ACTION_SEND);
+//                    intent.setType("text/*");
+//                    intent.putExtra(Intent.EXTRA_TEXT, "Content");
+//                    BottomSheet share = BottomSheet.createShareBottomSheet(NewsContentActivity.this, intent, "Title");
+//                    share.show();
+//                }
+
+            }
+        });
+
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_share) {
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate menu resource file.
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        ShareActionProvider myShareActionProvider =
+                (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+
+        Intent myShareIntent = new Intent(Intent.ACTION_SEND);
+        myShareIntent.setType("text/plain");
+        myShareIntent.putExtra(Intent.EXTRA_TEXT, share_data);
+        myShareActionProvider.setShareIntent(myShareIntent);
+
+        // Return true to display menu
+        return true;
+    }
+
 }
+

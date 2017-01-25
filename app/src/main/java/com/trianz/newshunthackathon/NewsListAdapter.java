@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
                 source.setText(newsDetails.getAuthor());
             }
 
-            Picasso.with(context).load(newsDetails.getUrlToImage()).fit().into(image);
+            Picasso.with(context).load(newsDetails.getUrlToImage()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(image);
 
         }
     }

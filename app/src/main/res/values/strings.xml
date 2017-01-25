@@ -11,4 +11,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_news_headlines">NewsHeadlines</string>
 
+    <string name="share">Share</string>
+
 </resources>
