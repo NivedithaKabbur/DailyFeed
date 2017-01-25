@@ -36,6 +36,8 @@ public class NewsContentActivity extends AppCompatActivity {
         String newsTitle =  getIntent().getStringExtra("newsItemTitle");
         String newsContent =  getIntent().getStringExtra("newsItemContent");
         final String newsUrl = getIntent().getStringExtra("newsItemUrl");
+        String newsPublishedAt = getIntent().getStringExtra("newsItemPublishedAt");
+
         share_data = newsUrl;
 
         news_image = (ImageView) findViewById(R.id.news_description_image);
@@ -46,7 +48,7 @@ public class NewsContentActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
-        Picasso.with(this).load(newsImage).fit().placeholder(R.drawable.collapsable_layout_image_cover).into(news_image);
+        Picasso.with(this).load(newsImage).fit().placeholder(R.drawable.news_details_foreground).into(news_image);
 
         news_title.setText(newsTitle);
         news_content.setText(newsContent);
@@ -72,20 +74,6 @@ public class NewsContentActivity extends AppCompatActivity {
                 sendIntent.putExtra(Intent.EXTRA_TEXT, share_data); // Simple text and URL to share
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
-
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    Intent sendIntent = new Intent();
-//                    sendIntent.setAction(Intent.ACTION_SEND);
-//                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Content");
-//                    sendIntent.setType("text/plain");
-//                    startActivity(sendIntent);
-//                }else {
-//                    Intent intent = new Intent(Intent.ACTION_SEND);
-//                    intent.setType("text/*");
-//                    intent.putExtra(Intent.EXTRA_TEXT, "Content");
-//                    BottomSheet share = BottomSheet.createShareBottomSheet(NewsContentActivity.this, intent, "Title");
-//                    share.show();
-//                }
 
             }
         });

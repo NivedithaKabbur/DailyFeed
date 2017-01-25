@@ -132,6 +132,7 @@ public class NewsHeadlines extends AppCompatActivity {
                         newsContent.putExtra("newsItemTitle", newsDetailsArray.get(position).getTitle());
                         newsContent.putExtra("newsItemContent", newsDetailsArray.get(position).getDescription());
                         newsContent.putExtra("newsItemUrl", newsDetailsArray.get(position).getUrl());
+                        newsContent.putExtra("newsItemPublishedAt", newsDetailsArray.get(position).getPublishedAt());
 
                         startActivity(newsContent);
                     }
