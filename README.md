@@ -1,5 +1,5 @@
 # DailyFeed
 News App powered by NewsAPI
 
-##Screenshots
+## Screenshots
 <img src="/newsapi_screenshot.jpg">
