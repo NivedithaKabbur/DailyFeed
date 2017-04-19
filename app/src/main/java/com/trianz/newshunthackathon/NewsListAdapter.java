@@ -71,7 +71,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
             }
 
                 Picasso.with(context).setLoggingEnabled(true);
-                Picasso.with(context).load(newsDetails.getUrlToImage()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(image);
+                Picasso.with(context).load(newsDetails.getUrlToImage()).fit().into(image);
 
         }
     }
