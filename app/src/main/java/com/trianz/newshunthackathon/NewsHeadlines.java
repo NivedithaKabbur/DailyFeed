@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,9 +42,9 @@ public class NewsHeadlines extends AppCompatActivity {
     ArrayList<NewsDetails> newsDetailsArray, newsDetailsSearchResult;
     private RecyclerView recyclerView = null;
     private NewsListAdapter newsListAdapter= null;
-    ProgressBar progressBar;
     ImageView errorImage;
     String news_source, news_source_name;
+    LottieAnimationView animationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class NewsHeadlines extends AppCompatActivity {
         newsDetailsArray = new ArrayList<>();
         newsDetailsSearchResult = new ArrayList<>();
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        animationView = (LottieAnimationView) findViewById(R.id.animation_view);
         errorImage = (ImageView) findViewById(R.id.error_image);
 
         final ActionBar actionBar = getSupportActionBar();
@@ -73,7 +74,9 @@ public class NewsHeadlines extends AppCompatActivity {
     public void fetchLatestNews(String newsSource)
     {
 
-        progressBar.setVisibility(View.VISIBLE);
+        animationView.setAnimation("loading_animation.json");
+        animationView.playAnimation();
+
         errorImage.setVisibility(View.INVISIBLE);
 
         newsDetailsArray.clear();
@@ -85,7 +88,7 @@ public class NewsHeadlines extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        progressBar.setVisibility(View.INVISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
 
                         JSONParser jsonParser = new JSONParser();
                         newsDetailsArray =  jsonParser.newsDataParser(response.toString());
@@ -101,7 +104,7 @@ public class NewsHeadlines extends AppCompatActivity {
                         // TODO Auto-generated method stub
 
                         error.printStackTrace();
-                        progressBar.setVisibility(View.INVISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
                         errorImage.setVisibility(View.VISIBLE);
 
                     }

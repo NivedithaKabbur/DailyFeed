@@ -3,6 +3,7 @@ package com.trianz.newshunthackathon;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -49,7 +51,7 @@ public class NewsFeedSource extends AppCompatActivity
     ArrayList<NewsSourceItem> newsSourceItemArray;
     private RecyclerView recyclerView = null;
     private NewsSourceAdapter newsSourceAdapter= null;
-    ProgressBar progressBar;
+    LottieAnimationView animationView;
     ImageView errorImage, collapseImage;
     Button business, entertainment,general, sports, technology, science_and_nature, music, gaming;
     String NEWS_CATEGORY = "general", NEWS_CATEGORY_NAME = "General";
@@ -69,7 +71,7 @@ public class NewsFeedSource extends AppCompatActivity
 
         newsSourceItemArray = new ArrayList<>();
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        animationView = (LottieAnimationView) findViewById(R.id.animation_view);
         errorImage = (ImageView) findViewById(R.id.error_image);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -243,7 +245,9 @@ public class NewsFeedSource extends AppCompatActivity
     public void fetchLatestNews(String category)
     {
 
-        progressBar.setVisibility(View.VISIBLE);
+        animationView.setAnimation("loading_animation.json");
+        animationView.playAnimation();
+
         errorImage.setVisibility(View.INVISIBLE);
 
         newsSourceItemArray.clear();
@@ -255,8 +259,7 @@ public class NewsFeedSource extends AppCompatActivity
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        progressBar.setVisibility(View.INVISIBLE);
-
+                        animationView.setVisibility(View.INVISIBLE);
                         JSONParser jsonParser = new JSONParser();
                         newsSourceItemArray =  jsonParser.newsSourceParser(response.toString());
 
@@ -271,7 +274,7 @@ public class NewsFeedSource extends AppCompatActivity
                         // TODO Auto-generated method stub
 
                         error.printStackTrace();
-                        progressBar.setVisibility(View.INVISIBLE);
+                      //  animationView.setVisibility(View.INVISIBLE);
                         errorImage.setVisibility(View.VISIBLE);
 
                     }

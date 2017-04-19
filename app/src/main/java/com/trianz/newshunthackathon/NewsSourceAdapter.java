@@ -61,7 +61,11 @@ public class NewsSourceAdapter  extends RecyclerView.Adapter<NewsSourceAdapter.M
         public void bindContent(NewsSourceItem newsSourceItem) {
 
             name.setText(newsSourceItem.getSourceName());
-            Picasso.with(context).load(newsSourceItem.getSourceLogo()).resize(300,300).networkPolicy(NetworkPolicy.OFFLINE).centerInside().into(image);
+
+            if(!newsSourceItem.getSourceLogo().equals("")) {
+                Picasso.with(context).load(newsSourceItem.getSourceLogo()).resize(300, 300).networkPolicy(NetworkPolicy.OFFLINE).centerInside().into(image);
+            }
+
 
         }
     }

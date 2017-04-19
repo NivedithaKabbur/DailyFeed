@@ -70,7 +70,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
                 source.setText(newsDetails.getAuthor());
             }
 
-            Picasso.with(context).load(newsDetails.getUrlToImage()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(image);
+                Picasso.with(context).setLoggingEnabled(true);
+                Picasso.with(context).load(newsDetails.getUrlToImage()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(image);
 
         }
     }
