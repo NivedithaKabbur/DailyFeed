@@ -8,6 +8,7 @@ public class NewsSourceItem {
     private String source_id;
     private String source_name;
     private String source_logo;
+    private String source_url;
 
     public void setSourceId(String source_id)
     {
@@ -37,5 +38,15 @@ public class NewsSourceItem {
     public String getSourceLogo()
     {
         return source_logo;
+    }
+
+    public void setSourceUrl(String source_url)
+    {
+        this.source_url = source_url;
+    }
+
+    public String getSourceUrl()
+    {
+        return source_url;
     }
 }
