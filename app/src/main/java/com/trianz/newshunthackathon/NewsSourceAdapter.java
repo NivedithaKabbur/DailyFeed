@@ -62,7 +62,9 @@ public class NewsSourceAdapter  extends RecyclerView.Adapter<NewsSourceAdapter.M
 
         public void bindContent(NewsSourceItem newsSourceItem) {
 
-            name.setText(newsSourceItem.getSourceName());
+            if(!newsSourceItem.getSourceName().equals("null")) {
+                name.setText(newsSourceItem.getSourceName());
+            }
 
             String url = newsSourceItem.getSourceUrl();
 

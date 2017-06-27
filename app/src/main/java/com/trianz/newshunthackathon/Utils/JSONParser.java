@@ -41,7 +41,8 @@ public class JSONParser {
                 String news_url = itemArrayObj.get("url").toString();
 
                 newsDetails.setTitle(news_title);
-                newsDetails.setAuthor(news_author);
+
+                newsDetails.setAuthor(news_author.replaceAll("\n",""));
                 newsDetails.setPublishedAt(news_published_at);
                 newsDetails.setUrlToImage(news_url_to_image);
                 newsDetails.setDescription(news_description);

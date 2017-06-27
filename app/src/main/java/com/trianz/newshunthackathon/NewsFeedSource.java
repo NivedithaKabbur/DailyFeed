@@ -47,7 +47,6 @@ import java.util.Set;
 public class NewsFeedSource extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
     ArrayList<NewsSourceItem> newsSourceItemArray;
     private RecyclerView recyclerView = null;
     private NewsSourceAdapter newsSourceAdapter= null;
@@ -274,7 +273,7 @@ public class NewsFeedSource extends AppCompatActivity
                         // TODO Auto-generated method stub
 
                         error.printStackTrace();
-                      //  animationView.setVisibility(View.INVISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
                         errorImage.setVisibility(View.VISIBLE);
 
                     }
