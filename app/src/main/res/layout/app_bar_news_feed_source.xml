@@ -31,7 +31,7 @@
                     android:id="@+id/header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/entertainment"
+                    android:background="@color/colorGrey"
                     android:contentDescription="@string/app_name"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"

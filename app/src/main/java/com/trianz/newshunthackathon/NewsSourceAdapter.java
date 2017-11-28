@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.net.URI;
@@ -69,19 +68,15 @@ public class NewsSourceAdapter  extends RecyclerView.Adapter<NewsSourceAdapter.M
             String url = newsSourceItem.getSourceUrl();
 
             try {
-                Picasso.with(context).load("http://logo.clearbit.com/"+getDomainName(url)+"?s=128").into(image);
+                Picasso.with(context).load("https://logo.clearbit.com/"+getDomainName(url)+"?s=128").into(image);
                 if(getDomainName(url).contains("espn.go"))
                 {
-                    Picasso.with(context).load("http://logo.clearbit.com/espn.com?s=128").into(image);
+                    Picasso.with(context).load("https://logo.clearbit.com/espn.com?s=128").into(image);
                 }
+
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
-
-//              if(!newsSourceItem.getSourceLogo().equals("")) {
-//                Picasso.with(context).load(newsSourceItem.getSourceLogo()).resize(300, 300).networkPolicy(NetworkPolicy.OFFLINE).centerInside().into(image);
-//             }
-
 
         }
     }

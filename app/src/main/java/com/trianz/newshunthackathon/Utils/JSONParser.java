@@ -81,12 +81,12 @@ public class JSONParser {
                 String news_source_name = itemArrayObj.get("name").toString();
                 String news_source_url = itemArrayObj.get("url").toString();
 
-                JSONObject urlsToLogos = itemArrayObj.getJSONObject("urlsToLogos");
-                String news_source_logo = urlsToLogos.get("medium").toString();
+           //     JSONObject urlsToLogos = itemArrayObj.getJSONObject("urlsToLogos");
+           //     String news_source_logo = urlsToLogos.get("medium").toString();
 
                 newsSourceItem.setSourceId(news_source_id);
                 newsSourceItem.setSourceName(news_source_name);
-                newsSourceItem.setSourceLogo(news_source_logo);
+           //     newsSourceItem.setSourceLogo(news_source_logo);
                 newsSourceItem.setSourceUrl(news_source_url);
 
                 newsSourceItemArrayList.add(newsSourceItem);

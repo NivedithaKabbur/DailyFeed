@@ -30,16 +30,6 @@ public class NewsSourceItem {
         return source_name;
     }
 
-    public void setSourceLogo(String source_logo)
-    {
-        this.source_logo = source_logo;
-    }
-
-    public String getSourceLogo()
-    {
-        return source_logo;
-    }
-
     public void setSourceUrl(String source_url)
     {
         this.source_url = source_url;

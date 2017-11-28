@@ -1,33 +1,22 @@
 package com.trianz.newshunthackathon;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
@@ -41,8 +30,6 @@ import com.trianz.newshunthackathon.Utils.RecyclerItemClickListener;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class NewsFeedSource extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,7 +39,7 @@ public class NewsFeedSource extends AppCompatActivity
     private NewsSourceAdapter newsSourceAdapter= null;
     LottieAnimationView animationView;
     ImageView errorImage, collapseImage;
-    Button business, entertainment,general, sports, technology, science_and_nature, music, gaming;
+    Button business, entertainment,general, sports, technology, science_and_nature, music, gaming, politics, health_and_medical;
     String NEWS_CATEGORY = "general", NEWS_CATEGORY_NAME = "General";
     CollapsingToolbarLayout collapsingToolbar;
 
@@ -94,6 +81,8 @@ public class NewsFeedSource extends AppCompatActivity
         science_and_nature = (Button) header.findViewById(R.id.news_option_science_nature);
         music = (Button) header.findViewById(R.id.news_option_music);
         gaming = (Button) header.findViewById(R.id.news_option_gaming);
+        politics = (Button) header.findViewById(R.id.news_option_politics);
+        health_and_medical = (Button) header.findViewById(R.id.news_option_health_medical);
 
         business.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +92,7 @@ public class NewsFeedSource extends AppCompatActivity
                 NEWS_CATEGORY = "business";
                 NEWS_CATEGORY_NAME = "Business";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackground(getResources().getDrawable(R.drawable.business));
+                collapseImage.setBackgroundColor(Color.LTGRAY);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
@@ -116,7 +105,7 @@ public class NewsFeedSource extends AppCompatActivity
                 NEWS_CATEGORY = "entertainment";
                 NEWS_CATEGORY_NAME = "Entertainment";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackground(getResources().getDrawable(R.drawable.entertainment));
+                collapseImage.setBackgroundColor(Color.BLACK);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
@@ -130,7 +119,7 @@ public class NewsFeedSource extends AppCompatActivity
                 NEWS_CATEGORY = "general";
                 NEWS_CATEGORY_NAME = "General";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackground(getResources().getDrawable(R.drawable.general));
+                collapseImage.setBackgroundColor(Color.WHITE);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
@@ -144,7 +133,7 @@ public class NewsFeedSource extends AppCompatActivity
                 NEWS_CATEGORY = "sport";
                 NEWS_CATEGORY_NAME = "Sports";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackground(getResources().getDrawable(R.drawable.sports));
+                collapseImage.setBackgroundColor(Color.YELLOW);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
@@ -157,7 +146,7 @@ public class NewsFeedSource extends AppCompatActivity
                 NEWS_CATEGORY = "technology";
                 NEWS_CATEGORY_NAME = "Technology";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackground(getResources().getDrawable(R.drawable.technology));
+                collapseImage.setBackgroundColor(Color.GRAY);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
@@ -170,7 +159,7 @@ public class NewsFeedSource extends AppCompatActivity
                 NEWS_CATEGORY = "science-and-nature";
                 NEWS_CATEGORY_NAME = "Science and Nature";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackground(getResources().getDrawable(R.drawable.science_and_nature));
+                collapseImage.setBackgroundColor(Color.MAGENTA);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
@@ -183,7 +172,7 @@ public class NewsFeedSource extends AppCompatActivity
                 NEWS_CATEGORY = "gaming";
                 NEWS_CATEGORY_NAME = "Gaming";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackground(getResources().getDrawable(R.drawable.gaming));
+                collapseImage.setBackgroundColor(Color.BLUE);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
@@ -196,7 +185,33 @@ public class NewsFeedSource extends AppCompatActivity
                 NEWS_CATEGORY = "music";
                 NEWS_CATEGORY_NAME = "Music";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackground(getResources().getDrawable(R.drawable.music));
+                collapseImage.setBackgroundColor(Color.GREEN);
+                fetchLatestNews(NEWS_CATEGORY);
+            }
+        });
+
+        politics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawers();
+                NEWS_CATEGORY = "politics";
+                NEWS_CATEGORY_NAME = "Politics";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackgroundColor(Color.CYAN);
+                fetchLatestNews(NEWS_CATEGORY);
+            }
+        });
+
+        health_and_medical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawers();
+                NEWS_CATEGORY = "health-and-medical";
+                NEWS_CATEGORY_NAME = "Health and Medicine";
+                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
+                collapseImage.setBackgroundColor(Color.RED);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
@@ -204,7 +219,7 @@ public class NewsFeedSource extends AppCompatActivity
 
         // Fetch the latest general news from the server
         collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-        collapseImage.setBackground(getResources().getDrawable(R.drawable.general));
+        collapseImage.setBackgroundColor(Color.WHITE);
         fetchLatestNews(NEWS_CATEGORY);
 
     }
@@ -253,8 +268,7 @@ public class NewsFeedSource extends AppCompatActivity
         recyclerViewSetter();
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET,"https://newsapi.org/v1/sources?language=en&category="+category, null, new Response.Listener<JSONObject>() {
-
+                (Request.Method.GET,"https://newsapi.org/v2/sources?language=en&category="+category+"&apiKey="+getResources().getString(R.string.api_key), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 

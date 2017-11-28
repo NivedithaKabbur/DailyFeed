@@ -12,5 +12,6 @@
     <string name="title_activity_news_headlines">NewsHeadlines</string>
 
     <string name="share">Share</string>
+    <string name="api_key">afd1d26d065744cb80a248a467a2e7a0</string>
 
 </resources>

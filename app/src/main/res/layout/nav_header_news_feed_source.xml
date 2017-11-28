@@ -30,12 +30,21 @@
             android:padding="5dp"
             android:gravity="center"
             android:textColor="@color/colorAccent" />
+        
+        <ScrollView
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
       <Button
             android:id="@+id/news_option_business"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -47,7 +56,7 @@
         <Button
             android:id="@+id/news_option_entertainment"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -59,7 +68,7 @@
         <Button
             android:id="@+id/news_option_general"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -71,7 +80,7 @@
         <Button
             android:id="@+id/news_option_sport"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -83,7 +92,7 @@
         <Button
             android:id="@+id/news_option_technology"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -95,7 +104,7 @@
         <Button
             android:id="@+id/news_option_science_nature"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -107,7 +116,7 @@
         <Button
             android:id="@+id/news_option_gaming"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -119,7 +128,7 @@
         <Button
             android:id="@+id/news_option_music"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -128,6 +137,31 @@
             android:background="@android:color/white"
             />
 
+        <Button
+            android:id="@+id/news_option_politics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="Politics"
+            android:background="@android:color/white"
+            />
+
+        <Button
+            android:id="@+id/news_option_health_medical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="Health and Medicine"
+            android:background="@android:color/white"
+            />
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
 </RelativeLayout>
