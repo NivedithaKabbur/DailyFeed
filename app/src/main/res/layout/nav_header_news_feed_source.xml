@@ -102,64 +102,29 @@
             />
 
         <Button
-            android:id="@+id/news_option_science_nature"
+            android:id="@+id/news_option_science"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
             android:textColor="@color/colorPrimary"
-            android:text="Science and nature"
+            android:text="Science"
             android:background="@android:color/white"
             />
 
         <Button
-            android:id="@+id/news_option_gaming"
+            android:id="@+id/news_option_health"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="15sp"
             android:layout_gravity="center"
             android:textColor="@color/colorPrimary"
-            android:text="Gaming"
+            android:text="Health"
             android:background="@android:color/white"
             />
 
-        <Button
-            android:id="@+id/news_option_music"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="15sp"
-            android:layout_gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:text="Music"
-            android:background="@android:color/white"
-            />
-
-        <Button
-            android:id="@+id/news_option_politics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="15sp"
-            android:layout_gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:text="Politics"
-            android:background="@android:color/white"
-            />
-
-        <Button
-            android:id="@+id/news_option_health_medical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="15sp"
-            android:layout_gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:text="Health and Medicine"
-            android:background="@android:color/white"
-            />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -39,7 +39,7 @@ public class NewsFeedSource extends AppCompatActivity
     private NewsSourceAdapter newsSourceAdapter= null;
     LottieAnimationView animationView;
     ImageView errorImage, collapseImage;
-    Button business, entertainment,general, sports, technology, science_and_nature, music, gaming, politics, health_and_medical;
+    Button business, entertainment,general, sports, technology, science, health;
     String NEWS_CATEGORY = "general", NEWS_CATEGORY_NAME = "General";
     CollapsingToolbarLayout collapsingToolbar;
 
@@ -78,11 +78,9 @@ public class NewsFeedSource extends AppCompatActivity
         general = (Button) header.findViewById(R.id.news_option_general);
         sports = (Button) header.findViewById(R.id.news_option_sport);
         technology = (Button) header.findViewById(R.id.news_option_technology);
-        science_and_nature = (Button) header.findViewById(R.id.news_option_science_nature);
-        music = (Button) header.findViewById(R.id.news_option_music);
-        gaming = (Button) header.findViewById(R.id.news_option_gaming);
-        politics = (Button) header.findViewById(R.id.news_option_politics);
-        health_and_medical = (Button) header.findViewById(R.id.news_option_health_medical);
+        science = (Button) header.findViewById(R.id.news_option_science);
+        health = (Button) header.findViewById(R.id.news_option_health);
+
 
         business.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +128,7 @@ public class NewsFeedSource extends AppCompatActivity
             public void onClick(View v) {
 
                 drawer.closeDrawers();
-                NEWS_CATEGORY = "sport";
+                NEWS_CATEGORY = "sports";
                 NEWS_CATEGORY_NAME = "Sports";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
                 collapseImage.setBackgroundColor(Color.YELLOW);
@@ -151,65 +149,27 @@ public class NewsFeedSource extends AppCompatActivity
             }
         });
 
-        science_and_nature.setOnClickListener(new View.OnClickListener() {
+        science.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 drawer.closeDrawers();
-                NEWS_CATEGORY = "science-and-nature";
-                NEWS_CATEGORY_NAME = "Science and Nature";
+                NEWS_CATEGORY = "science";
+                NEWS_CATEGORY_NAME = "Science";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
                 collapseImage.setBackgroundColor(Color.MAGENTA);
                 fetchLatestNews(NEWS_CATEGORY);
             }
         });
 
-        gaming.setOnClickListener(new View.OnClickListener() {
+
+        health.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 drawer.closeDrawers();
-                NEWS_CATEGORY = "gaming";
-                NEWS_CATEGORY_NAME = "Gaming";
-                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackgroundColor(Color.BLUE);
-                fetchLatestNews(NEWS_CATEGORY);
-            }
-        });
-
-        music.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                drawer.closeDrawers();
-                NEWS_CATEGORY = "music";
-                NEWS_CATEGORY_NAME = "Music";
-                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackgroundColor(Color.GREEN);
-                fetchLatestNews(NEWS_CATEGORY);
-            }
-        });
-
-        politics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                drawer.closeDrawers();
-                NEWS_CATEGORY = "politics";
-                NEWS_CATEGORY_NAME = "Politics";
-                collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
-                collapseImage.setBackgroundColor(Color.CYAN);
-                fetchLatestNews(NEWS_CATEGORY);
-            }
-        });
-
-        health_and_medical.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                drawer.closeDrawers();
-                NEWS_CATEGORY = "health-and-medical";
-                NEWS_CATEGORY_NAME = "Health and Medicine";
+                NEWS_CATEGORY = "health";
+                NEWS_CATEGORY_NAME = "Health";
                 collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
                 collapseImage.setBackgroundColor(Color.RED);
                 fetchLatestNews(NEWS_CATEGORY);
@@ -221,7 +181,6 @@ public class NewsFeedSource extends AppCompatActivity
         collapsingToolbar.setTitle(NEWS_CATEGORY_NAME);
         collapseImage.setBackgroundColor(Color.WHITE);
         fetchLatestNews(NEWS_CATEGORY);
-
     }
 
     @Override
